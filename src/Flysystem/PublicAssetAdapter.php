@@ -62,14 +62,6 @@ class PublicAssetAdapter extends AssetAdapter implements PublicAdapter
      */
     protected function initParentURLPrefix($path)
     {
-        // Detect segment between root directory and assets root
-        $path = str_replace('\\', '/', $path);
-        $basePath = str_replace('\\', '/', BASE_PATH);
-        if (stripos($path, $basePath) === 0) {
-            $prefix = substr($path, strlen($basePath));
-        } else {
-            $prefix = ASSETS_DIR;
-        }
-        $this->parentUrlPrefix = ltrim($prefix, '/');
+        $this->parentUrlPrefix = ltrim(ASSETS_DIR, '/');
     }
 }
