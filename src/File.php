@@ -19,7 +19,7 @@ use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\HTMLReadonlyField;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\ArrayListInterface;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
@@ -1212,7 +1212,7 @@ class File extends DataObject implements AssetContainer, Thumbnail, CMSPreviewab
     public function BackLinkTracking()
     {
         // @todo - Implement PolymorphicManyManyList to replace this
-        $list = ArrayListInterface::create();
+        $list = ArrayList::create();
         foreach ($this->BackLinks() as $link) {
             // Ensure parent record exists
             $item = $link->Parent();

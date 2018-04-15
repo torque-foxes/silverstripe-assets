@@ -9,7 +9,7 @@ use SilverStripe\Assets\File;
 use SilverStripe\Assets\Filesystem;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
-use SilverStripe\ORM\ArrayListInterface;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Templates\Viewer;
 
@@ -174,7 +174,7 @@ class AssetAdapter extends Local
     protected function renderTemplate($template)
     {
         // Build allowed extensions
-        $allowedExtensions = new ArrayListInterface();
+        $allowedExtensions = new ArrayList();
         foreach (File::config()->allowed_extensions as $extension) {
             if ($extension) {
                 $allowedExtensions->push(new ArrayData(array(
