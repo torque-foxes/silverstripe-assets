@@ -16,8 +16,8 @@ use SilverStripe\View\ArrayData;
 use SilverStripe\View\HTML;
 use SilverStripe\View\Parsers\ShortcodeHandler;
 use SilverStripe\View\Parsers\ShortcodeParser;
-use SilverStripe\View\SSViewer;
-use SilverStripe\View\SSViewer_FromString;
+use SilverStripe\View\Templates\Viewer;
+use SilverStripe\View\Templates\ViewerFromString;
 
 /**
  * Provides shortcodes for File dataobject
@@ -171,8 +171,8 @@ class FileShortcodeProvider implements ShortcodeHandler, Flushable
      */
     public static function getCacheKey($params, $content = null)
     {
-        $key = SSViewer::config()->get('global_key');
-        $viewer = new SSViewer_FromString($key);
+        $key = Viewer::config()->get('global_key');
+        $viewer = new ViewerFromString($key);
         $globalKey = $viewer->process(ArrayData::create([]));
         $argsKey = md5(serialize($params)) . '#' . md5(serialize($content));
 

@@ -9,9 +9,9 @@ use SilverStripe\Assets\File;
 use SilverStripe\Assets\Filesystem;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\ArrayListInterface;
 use SilverStripe\View\ArrayData;
-use SilverStripe\View\SSViewer;
+use SilverStripe\View\Templates\Viewer;
 
 /**
  * Adapter for local filesystem based on assets directory
@@ -174,7 +174,7 @@ class AssetAdapter extends Local
     protected function renderTemplate($template)
     {
         // Build allowed extensions
-        $allowedExtensions = new ArrayList();
+        $allowedExtensions = new ArrayListInterface();
         foreach (File::config()->allowed_extensions as $extension) {
             if ($extension) {
                 $allowedExtensions->push(new ArrayData(array(
@@ -184,9 +184,9 @@ class AssetAdapter extends Local
         }
 
         Config::nest();
-        Config::modify()->set(SSViewer::class, 'source_file_comments', false);
+        Config::modify()->set(Viewer::class, 'source_file_comments', false);
 
-        $viewer = SSViewer::create(array($template));
+        $viewer = Viewer::create(array($template));
         $result = (string)$viewer->process(new ArrayData(array(
             'AllowedExtensions' => $allowedExtensions
         )));
