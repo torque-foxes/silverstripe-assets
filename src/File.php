@@ -139,6 +139,7 @@ class File extends DataObject implements AssetContainer, Thumbnail, CMSPreviewab
         "Owner" => Member::class,
     );
 
+<<<<<<< HEAD
     private static $has_many = [
         'BackLinks' => FileLink::class . '.Linked',
     ];
@@ -146,6 +147,11 @@ class File extends DataObject implements AssetContainer, Thumbnail, CMSPreviewab
     private static $owned_by = [
         'BackLinks',
     ];
+=======
+    private static $indexes = array(
+        'FileHash' => true
+    );
+>>>>>>> pulls/4.0/mucho-important-permalink-fix
 
     private static $defaults = array(
         "ShowInSearch" => 1,
