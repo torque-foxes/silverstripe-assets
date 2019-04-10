@@ -30,6 +30,7 @@ before_script:
   - printf "\n" | pecl install imagick
   - composer self-update || true
   - phpenv rehash
+  - phpenv config-rm xdebug.ini
   - export PATH=~/.config/composer/vendor/bin:$PATH
   - echo 'memory_limit = 2G' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
