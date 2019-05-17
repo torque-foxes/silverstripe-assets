@@ -16,12 +16,15 @@ use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Environment;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\FullTextSearch\Search\Extensions\ProxyDBExtension;
+use SilverStripe\FullTextSearch\Search\Updaters\SearchUpdater;
 use SilverStripe\Logging\PreformattedEchoHandler;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DataQuery;
 use SilverStripe\ORM\DB;
 use SilverStripe\Versioned\Versioned;
+use TractorCow\SilverStripeProxyDB\ProxyDBFactory;
 
 /**
  * Service to help migrate File dataobjects to the new APL.
@@ -95,6 +98,12 @@ class FileMigrationHelper
         // Set max time and memory limit
         Environment::increaseTimeLimitTo();
         Environment::increaseMemoryLimitTo();
+
+        // Disable updater when running file migration
+        if (ProxyDBFactory::has_extension(ProxyDBExtension::class)) {
+            $this->logger->info('Disabling search updater to stop triggering index updates during migration');
+            SearchUpdater::config()->set('enabled', false);
+        }
 
         $this->logger->info('MIGRATING SILVERSTRIPE 3 LEGACY FILES');
         $ss3Count = $this->ss3Migration($base);
@@ -366,7 +375,7 @@ class FileMigrationHelper
 
         return $count;
     }
-    
+
     /**
      * Check if a file's classname is compatible with it's extension
      *
